@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Utilities;
 
-Console.WriteLine("Hello, World!");
+var classificationSql = await SchemaUtils.AddClassifications();
 
-await SchemaUtils.AddClassifications();
+Console.WriteLine("Done!");
+
+
