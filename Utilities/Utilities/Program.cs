@@ -2,7 +2,8 @@
 using Utilities;
 
 var classificationSql = await SchemaUtils.AddClassifications(
-    "Server=localhost;Database=web-ua;Integrated Security=True;TrustServerCertificate=True"
+    "Server=localhost;Database=web-ua;Integrated Security=True;TrustServerCertificate=True",
+    "my classification"
 );
 
 Console.WriteLine("Done!");

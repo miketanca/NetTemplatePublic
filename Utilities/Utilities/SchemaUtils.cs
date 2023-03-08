@@ -5,7 +5,7 @@ namespace Utilities;
 
 public static class SchemaUtils
 {
-    public static async Task<string> AddClassifications(string connectionString)
+    public static async Task<string> AddClassifications(string connectionString, string label)
     {
         var options = new DbContextOptionsBuilder().UseSqlServer(connectionString).Options;
         var db = new UtilityDbContext(options);
@@ -23,7 +23,7 @@ public static class SchemaUtils
                     + "\n";
                 return "ADD SENSITIVITY CLASSIFICATION TO\n"
                     + columns
-                    + "    WITH (LABEL='my classification', INFORMATION_TYPE='other');\n";
+                    + $"    WITH (LABEL='{label}', INFORMATION_TYPE='other');\n";
             });
         return string.Join("\n", classificationSql);
     }
