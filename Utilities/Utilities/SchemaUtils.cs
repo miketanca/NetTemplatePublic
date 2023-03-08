@@ -4,13 +4,9 @@ namespace Utilities;
 
 public static class SchemaUtils
 {
-    public static async Task<string> AddClassifications()
+    public static async Task<string> AddClassifications(string connectionString)
     {
-        var options = new DbContextOptionsBuilder()
-            .UseSqlServer(
-                "Server=localhost;Database=web-ua;Integrated Security=True;TrustServerCertificate=True"
-            )
-            .Options;
+        var options = new DbContextOptionsBuilder().UseSqlServer(connectionString).Options;
         var db = new UtilityDbContext(options);
 
         var columns = await db.Columns
@@ -30,5 +26,16 @@ public static class SchemaUtils
                     + "    WITH (LABEL='my classification', INFORMATION_TYPE='other');\n";
             });
         return string.Join("\n", classificationSql);
+    }
+
+    public static async Task<string> CombineFlyway(params string[] folders)
+    {
+        var allContents = folders
+            .SelectMany(x => Directory.GetFiles(x))
+            .OrderBy(x => Path.GetFileName(x))
+            .Select(x => File.ReadAllText(x))
+            .Select(x => x + "\n");
+
+        return string.Join("", allContents.Select(x => x + "\n"));
     }
 }
