@@ -36,7 +36,7 @@ public static class SchemaUtils
             .OrderBy(x =>
             {
                 var name = Path.GetFileName(x);
-                var match = Regex.Match("V1_0_11", @"^V(\d+)_(\d+)_(\d+)");
+                var match = Regex.Match(name, @"^V(\d+)_(\d+)_(\d+)");
                 var ns = new[]
                 {
                     int.Parse(match.Groups[1].Value),
