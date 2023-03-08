@@ -18,10 +18,9 @@ public static class SchemaUtils
             .GroupBy(x => x.Table)
             .Select(x =>
             {
-                var columns = string.Join(
-                    "",
-                    x.Select(y => $"    [{y.Schema}].[{y.Table}].[{y.Column}]\n")
-                );
+                var columns =
+                    string.Join(",\n", x.Select(y => $"    [{y.Schema}].[{y.Table}].[{y.Column}]"))
+                    + "\n";
                 return "ADD SENSITIVITY CLASSIFICATION TO\n"
                     + columns
                     + "    WITH (LABEL='my classification', INFORMATION_TYPE='other');\n";
